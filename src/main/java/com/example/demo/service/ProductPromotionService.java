@@ -12,13 +12,32 @@ import com.example.demo.rules.RuleEngine;
 @Service
 public class ProductPromotionService {
 	
-	public void getTotalPriceOfCart(List<Product> products) {
+	Double totalPrice=0D;
+	
+	public Double getTotalPriceOfCart(List<Product> products) {
 		for(Product product : products) {
 			if(product.getId().equals(ProductConstants.productA)) {
 				Facts fact = new Facts(); 
-				fact.put("3 A's for 130", product);
+				fact.put(ProductConstants.productAPromotion, product);
+				RuleEngine.getRulesEngineInstance().fire(RuleEngine.getRuleInstance(), fact);
+			}
+			if(product.getId().equals(ProductConstants.productB)) {
+				Facts fact = new Facts(); 
+				fact.put(ProductConstants.productBPromotion, product);
 				RuleEngine.getRulesEngineInstance().fire(RuleEngine.getRuleInstance(), fact);
 			}
 		}
+		Facts fact = new Facts(); 
+		fact.put(ProductConstants.productCAndDPromotion, products);
+		RuleEngine.getRulesEngineInstance().fire(RuleEngine.getRuleInstance(), fact);
+		
+		
+		products.forEach( product ->{
+			totalPrice = totalPrice + product.getPrice();
+		});
+		
+		return totalPrice;
 	}
+	
+	
 }

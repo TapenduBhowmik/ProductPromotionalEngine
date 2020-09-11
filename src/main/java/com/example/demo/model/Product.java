@@ -2,14 +2,18 @@ package com.example.demo.model;
 
 import org.jeasy.rules.api.Facts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Product extends Facts{
-	
+	@JsonValue
 	private String id;
-	
+	@JsonValue
 	private Integer quantity;
 	
+	@JsonIgnore
 	private Double price;
-	
+	@JsonIgnore
 	private Double unitPrice;
 	
 	public Product(String id, Integer quantity, Double price) {

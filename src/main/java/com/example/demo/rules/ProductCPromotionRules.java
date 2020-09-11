@@ -13,49 +13,9 @@ import com.example.demo.model.Product;
 import com.example.demo.service.ProductPriceService;
 
 @Rule
-public class ProductPromotionRules {
-	
+public class ProductCPromotionRules {
 	@Autowired
 	ProductPriceService productService;
-	@Condition
-	public boolean productAFirstRule(@Fact("3 A's for 130") Product product) {
-		if(ProductConstants.productA.equals(product.getId())) {
-				return true;
-		}
-		return false;
-	}
-	
-	@Action
-	public Product getProductAFirstRule(@Fact("3 A's for 130") Product product) {
-		
-		Double unitPrice = productService.getUnitProductPrice(ProductConstants.productA);
-		Double price = 0D;
-		Integer offeredQuantity = product.getQuantity()/3;
-		Integer nonOfferedQuanity = product.getQuantity() % 3;
-		price = offeredQuantity*130D + unitPrice*nonOfferedQuanity;
-		product.setPrice(price);
-		return product;
-	}
-	
-	@Condition
-	public boolean productBFirstRule(@Fact("2 B's for 45") Product product) {
-		if(ProductConstants.productB.equals(product.getId())) {
-				return true;
-		}
-		return false;
-	}
-	
-	@Action
-	public Product getProductBFirstRule(@Fact("2 B's for 45") Product product) {
-		
-		Double unitPrice = productService.getUnitProductPrice(ProductConstants.productB);
-		Double price = 0D;
-		Integer offeredQuantity = product.getQuantity()/2;
-		Integer nonOfferedQuanity = product.getQuantity() % 2;
-		price = offeredQuantity*45D + unitPrice*nonOfferedQuanity;
-		product.setPrice(price);
-		return product;
-	}
 	
 	@Condition
 	public boolean productCAndDFirstRule(@Fact("C & D for 45") List<Product> products) {
@@ -69,7 +29,7 @@ public class ProductPromotionRules {
 	}
 	
 	@Action
-	public List<Product> getProductCAndDFirstRule(@Fact("C & D for 45") List<Product> products){
+	public void getProductCAndDFirstRule(@Fact("C & D for 45") List<Product> products){
 		Double unitPriceProductC = productService.getUnitProductPrice(ProductConstants.productC);
 		Double unitPriceProductD = productService.getUnitProductPrice(ProductConstants.productD);
 		Integer productCQuantity = 0;
@@ -107,6 +67,5 @@ public class ProductPromotionRules {
 		products.add(productC);
 		products.add(productD);
 		
-		return products;
 	}
 }

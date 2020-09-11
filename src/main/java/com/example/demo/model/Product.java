@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
-public class Product {
+import org.jeasy.rules.api.Facts;
+
+public class Product extends Facts{
 	
 	private String id;
 	

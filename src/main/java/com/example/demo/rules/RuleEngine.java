@@ -3,10 +3,11 @@ package com.example.demo.rules;
 import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
+import org.jeasy.rules.core.RulesEngineParameters;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component("RuleEngine")
+
 public  class RuleEngine {
 	
 	public static Rules getRuleInstance() {
@@ -18,7 +19,8 @@ public  class RuleEngine {
 	}
 	
 	public static RulesEngine getRulesEngineInstance() {
-		RulesEngine produtRulesEngine = new DefaultRulesEngine();
+		RulesEngineParameters parameter = new RulesEngineParameters().skipOnFirstAppliedRule(true);
+		RulesEngine produtRulesEngine = new DefaultRulesEngine(parameter);
 		return produtRulesEngine;
 	}
 

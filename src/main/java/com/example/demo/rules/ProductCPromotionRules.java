@@ -30,8 +30,8 @@ public class ProductCPromotionRules {
 	
 	@Action
 	public void getProductCAndDFirstRule(@Fact("C & D for 45") List<Product> products){
-		Double unitPriceProductC = productService.getUnitProductPrice(ProductConstants.productC);
-		Double unitPriceProductD = productService.getUnitProductPrice(ProductConstants.productD);
+		Double unitPriceProductC = 0D;
+		Double unitPriceProductD = 0D;
 		Integer productCQuantity = 0;
 		Integer productDQuantity = 0;
 		Product productC = null;
@@ -40,32 +40,43 @@ public class ProductCPromotionRules {
 			if(ProductConstants.productC.equals(product.getId())){
 				productC = product;
 				productCQuantity = product.getQuantity();
+				unitPriceProductC = product.getUnitPrice();
 			}
 			if(ProductConstants.productD.equals(product.getId())){
 				productD = product;
 				productDQuantity = product.getQuantity();
+				unitPriceProductD = product.getUnitPrice();
 			}
 		}
 		
 		if(Math.subtractExact(productCQuantity.intValue(),productDQuantity.intValue()) > 0) {
 			Double onlyCProductPrice = Math.subtractExact(productCQuantity.intValue(),productDQuantity.intValue()) * unitPriceProductC; 
-			Double discountedProductPrice = productDQuantity * 45D;
+			Double discountedProductPrice = productDQuantity * 30D;
 			productC.setPrice(onlyCProductPrice);
-			productD.setPrice(discountedProductPrice);
+			if(productD != null) {
+				productD.setPrice(discountedProductPrice);
+			}
+			
 		}
 		if(Math.subtractExact(productCQuantity.intValue(),productDQuantity.intValue()) < 0) {
 			Double onlyDProductPrice = Math.subtractExact(productDQuantity.intValue(),productCQuantity.intValue()) * unitPriceProductD; 
-			Double discountedProductPrice = productCQuantity * 45D;
-			productC.setPrice(discountedProductPrice);
+			Double discountedProductPrice = productCQuantity * 30D;
+			if(productC != null) {
+				productC.setPrice(discountedProductPrice);
+			}
+			
 			productD.setPrice(onlyDProductPrice);
 		}
 		if(Math.subtractExact(productCQuantity.intValue(),productDQuantity.intValue()) == 0) {
-			Double discountedProductPrice = productCQuantity * 45D;
-			productC.setPrice(discountedProductPrice);
-			productD.setPrice(0D);
+			Double discountedProductPrice = productCQuantity * 30D;
+			if(productC != null) {
+				productC.setPrice(discountedProductPrice);
+			}
+			if(productD != null) {
+				productD.setPrice(0D);
+			}
+			
 		}
-		products.add(productC);
-		products.add(productD);
-		
+
 	}
 }

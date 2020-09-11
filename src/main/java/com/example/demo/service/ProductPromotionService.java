@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeasy.rules.api.Facts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.constants.ProductConstants;
@@ -14,8 +15,12 @@ import com.example.demo.rules.RuleEngine;
 @Service
 public class ProductPromotionService {
 	
-	Double totalPrice=0D;
+	@Autowired
+	ProductPriceService price;
+	
+	
 	static Map<String,String> individualProductPromotion = new HashMap<String,String>();
+	
 	static {
 		individualProductPromotion.put(ProductConstants.productA, ProductConstants.productAPromotion);
 		individualProductPromotion.put(ProductConstants.productB, ProductConstants.productBPromotion);
@@ -23,7 +28,10 @@ public class ProductPromotionService {
 	
 	
 	public Double getTotalPriceOfCart(List<Product> products) {
+		Double totalPrice=0D;
+		Map<String,Double> unitPriceMap = price.init();
 		for(Product product : products) {
+			product.setUnitPrice(unitPriceMap.get(product.getId()));
 			if(individualProductPromotion.containsKey(product.getId())) {
 				Facts fact = new Facts(); 
 				fact.put(individualProductPromotion.get(product.getId()), product);
@@ -31,9 +39,9 @@ public class ProductPromotionService {
 			}
 		}
 		this.getCombinedPromotion(products);
-		products.forEach( product ->{
+		for(Product product : products) {
 			totalPrice = totalPrice + product.getPrice();
-		});
+		}
 		
 		return totalPrice;
 	}

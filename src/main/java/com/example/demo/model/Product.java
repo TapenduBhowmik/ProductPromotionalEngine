@@ -10,6 +10,8 @@ public class Product extends Facts{
 	
 	private Double price;
 	
+	private Double unitPrice;
+	
 	public Product(String id, Integer quantity, Double price) {
 		super();
 		this.id = id;
@@ -40,4 +42,14 @@ public class Product extends Facts{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -13,27 +14,26 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Product;
 import com.opencsv.CSVReader;
 
 @Service
 public class ProductPriceService {
-	
-	@Value("${product.filename}")
-	private String productDetailsFile;
-	
-	@Autowired
-	private ResourceLoader resouceLoader;
-	Map<String, Double> productPriceMap = new HashMap<String, Double>();
+
+	@Cacheable("map")
 	@PostConstruct
-	public void init(){
-		Resource resource = resouceLoader.getResource("classpath:"+ "csv/"+productDetailsFile);
+	public Map<String, Double> init(){
+		Map<String, Double> productPriceMap = new HashMap<String, Double>();
+		
 		try {
-			Reader reader = Files.newBufferedReader(Paths.get(resource.getURI()));
+			BufferedReader reader = Files.newBufferedReader(Paths.get(
+				      ClassLoader.getSystemResource("csv/" + "productprice.csv").toURI()));
 			CSVReader csvReader = new CSVReader(reader);
 		    String[] line;
 		    while ((line = csvReader.readNext()) != null) {
@@ -41,14 +41,12 @@ public class ProductPriceService {
 		    }
 		    reader.close();
 		    csvReader.close();
-		} catch (IOException e) {
-			
+		    
+		} catch (Exception e) {
+			System.out.println(e);
 		}
+		return productPriceMap;
 	}
 	
-	public Double getUnitProductPrice(String productId) {
-		Double unitPrice = productPriceMap.get(productId);
-		return unitPrice;
-	}
 
 }

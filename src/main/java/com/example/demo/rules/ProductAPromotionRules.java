@@ -13,8 +13,7 @@ import com.example.demo.service.ProductPriceService;
 @Rule
 public class ProductAPromotionRules {
 	
-	@Autowired
-	ProductPriceService productService;
+	
 	@Condition
 	public boolean productAFirstRule(@Fact("3 A's for 130") Product product) {
 		if(ProductConstants.productA.equals(product.getId())) {
@@ -25,8 +24,8 @@ public class ProductAPromotionRules {
 	
 	@Action
 	public void getProductAFirstRule(@Fact("3 A's for 130") Product product) {
+		Double unitPrice = product.getUnitPrice();
 		
-		Double unitPrice = productService.getUnitProductPrice(ProductConstants.productA);
 		Double price = 0D;
 		Integer offeredQuantity = product.getQuantity()/3;
 		Integer nonOfferedQuanity = product.getQuantity() % 3;

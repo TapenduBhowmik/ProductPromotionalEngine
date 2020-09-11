@@ -26,7 +26,7 @@ public class ProductAPromotionRules {
 	@Action
 	public void getProductAFirstRule(@Fact("3 A's for 130") Product product) {
 		
-		Double unitPrice = 50D;// productService.getUnitProductPrice(ProductConstants.productA);
+		Double unitPrice = productService.getUnitProductPrice(ProductConstants.productA);
 		Double price = 0D;
 		Integer offeredQuantity = product.getQuantity()/3;
 		Integer nonOfferedQuanity = product.getQuantity() % 3;

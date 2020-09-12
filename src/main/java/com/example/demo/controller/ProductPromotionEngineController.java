@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import com.example.demo.service.ProductPromotionService;
 
 @RestController
 public class ProductPromotionEngineController {
+	Logger logger =LoggerFactory.getLogger(ProductPromotionEngineController.class);
 	
 	@Value("${product.ids}")
 	String productIds;
@@ -26,6 +29,7 @@ public class ProductPromotionEngineController {
 	public ResponseEntity<String> getTotalPriceOfCart(@RequestBody Cart cart) throws Exception{
 		
 		if(cart.getProductList() == null || cart.getProductList().isEmpty()) {
+			logger.info("Cart is Empty");
 			throw new NoProductInCartException("There is no product in cart");
 		}
 		

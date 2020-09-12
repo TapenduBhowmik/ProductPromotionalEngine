@@ -26,16 +26,16 @@ public class ProductPromotionEngineController {
 	ProductPromotionService promotionService;
 	
 	@PostMapping(value = "/getCartTotal",produces = MediaType.TEXT_PLAIN_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getTotalPriceOfCart(@RequestBody Cart cart) throws Exception{
-		
-		if(cart.getProductList() == null || cart.getProductList().isEmpty()) {
+	public ResponseEntity<String> getTotalPriceOfCart(@RequestBody Cart cart) throws Exception {
+
+		if (cart.getProductList() == null || cart.getProductList().isEmpty()) {
 			logger.info("Cart is Empty");
 			throw new NoProductInCartException("There is no product in cart");
 		}
-		
+
 		Double TotalPrice = promotionService.getTotalPriceOfCart(cart.getProductList());
-		
-		return new ResponseEntity<String>("Total price of the Cart is : " +TotalPrice,HttpStatus.OK);
+
+		return new ResponseEntity<String>("Total price of the Cart is : " + TotalPrice, HttpStatus.OK);
 	}
 
 }

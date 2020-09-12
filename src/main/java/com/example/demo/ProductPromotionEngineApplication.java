@@ -11,7 +11,7 @@ public class ProductPromotionEngineApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProductPromotionEngineApplication.class, args);
-		
+
 	}
 
 }

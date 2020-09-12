@@ -3,12 +3,13 @@ package com.example.demo.model;
 import org.jeasy.rules.api.Facts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Product extends Facts{
-	@JsonValue
+	@JsonProperty
 	private String id;
-	@JsonValue
+	@JsonProperty
 	private Integer quantity;
 	
 	@JsonIgnore

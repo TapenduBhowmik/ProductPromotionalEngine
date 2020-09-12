@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.jeasy.rules.api.Facts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import com.example.demo.rules.RuleEngine;
 @Service
 public class ProductPromotionService {
 	
+	Logger logger = LoggerFactory.getLogger(ProductPromotionService.class);
 	@Autowired
 	ProductPriceService price;
 	
@@ -42,7 +45,7 @@ public class ProductPromotionService {
 		for(Product product : products) {
 			totalPrice = totalPrice + product.getPrice();
 		}
-		
+		logger.info("Total price is" + totalPrice);
 		return totalPrice;
 	}
 	

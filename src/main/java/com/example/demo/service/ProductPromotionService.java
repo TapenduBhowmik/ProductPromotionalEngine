@@ -45,7 +45,7 @@ public class ProductPromotionService {
 		for(Product product : products) {
 			totalPrice = totalPrice + product.getPrice();
 		}
-		logger.info("Total price is" + totalPrice);
+		logger.info("Total price is " + totalPrice);
 		return totalPrice;
 	}
 	

@@ -1,24 +1,16 @@
 package com.example.demo.service;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.Cache.ValueWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVReader;
@@ -26,6 +18,7 @@ import com.opencsv.CSVReader;
 @Service
 public class ProductPriceService {
 
+	Logger logger = LoggerFactory.getLogger(ProductPriceService.class);
 	@Cacheable("map")
 	@PostConstruct
 	public Map<String, Double> init(){
@@ -38,6 +31,7 @@ public class ProductPriceService {
 		    String[] line;
 		    while ((line = csvReader.readNext()) != null) {
 		    	productPriceMap.put(line[0], Double.parseDouble(line[1]));
+		    	logger.info("Product Id is " + line[0] + " and Product unit price is " + Double.parseDouble(line[1]));
 		    }
 		    reader.close();
 		    csvReader.close();

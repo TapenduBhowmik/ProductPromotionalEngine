@@ -6,11 +6,10 @@ import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.annotation.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.constants.ProductConstants;
 import com.example.demo.model.Product;
-import com.example.demo.service.ProductPriceService;
+
 
 @Rule
 public class ProductAPromotionRules {

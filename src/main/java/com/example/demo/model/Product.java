@@ -4,7 +4,6 @@ import org.jeasy.rules.api.Facts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Product extends Facts{
 	@JsonProperty

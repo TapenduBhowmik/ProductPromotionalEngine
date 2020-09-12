@@ -4,8 +4,6 @@ import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
 import org.jeasy.rules.core.DefaultRulesEngine;
 import org.jeasy.rules.core.RulesEngineParameters;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 
 public  class RuleEngine {
